@@ -21,6 +21,8 @@ enum layer_names {
 
 enum custom_keycodes {
   // --- Original Macro
+  KANA,
+  EISU,
     M_LANG,
     M_S_MINS,
     M_S_EQL,
@@ -61,7 +63,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BRC),
   LCTL_T(KC_TAB), KC_A,    KC_S,      KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, TD(TD_QUOT),
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  KC_CAPS, KC_NO, KC_NO, KC_LALT,  KC_LGUI, LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),M_LANG, KC_RALT, KC_NO, KC_NO,KC_NO
+  KC_CAPS, EISU, KC_NO, KC_LALT,  KC_LGUI, LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),KC_NO, KC_RALT, KC_NO, KANA,KC_NO
 ),
 
 /* Lower
@@ -127,6 +129,18 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
+    case EISU:
+      if (record->event.pressed) {
+          tap_code16(LALT(KC_GRAVE));
+      }
+      return false;
+      break;
+    case KANA:
+      if (record->event.pressed) {
+          tap_code16(LALT(KC_GRAVE));
+      }
+      return false;
+      break;
     // Window切り替え機能(on Windows)
     case WIN_TAB:
         if (record->event.pressed) {
