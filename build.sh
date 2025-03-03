@@ -1,11 +1,9 @@
 QMK_VERSION='0.22.0'
-# 引数を1つ受け取る
-# 引数はキーボードフォルダ名
 
-# 引数を/で分割
-IFS='/' read -r -a array <<< $1
 # 第一引数はキーボード名
-keyboard=${array[0]}
+keyboard=$1
+build=$2
+folder=$3
 
 # qmk_firmware(https://github.com/qmk/qmk_firmware.git)をlatestのみをクローン
 # もしqmk_firmwareが存在する場合はスキップ

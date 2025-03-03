@@ -26,6 +26,7 @@ enum custom_keycodes {
     M_QUOT,
     M_MINUS,
     M_S_MINUS,
+    WIN_TAB,
     WIN_LEFT,
     WIN_RGHT,
 };
@@ -141,6 +142,14 @@ static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, uin
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
     // Window切り替え機能(on Windows)
+    case WIN_TAB:
+        if (record->event.pressed) {
+            register_code(KC_LGUI);
+            register_code(KC_TAB);
+            unregister_code(KC_TAB);
+            unregister_code(KC_LGUI);
+        }
+        break;
     case WIN_LEFT:
         if (record->event.pressed) {
             register_code(KC_LGUI);
