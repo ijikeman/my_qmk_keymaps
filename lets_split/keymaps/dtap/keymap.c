@@ -22,13 +22,27 @@ enum layer_names {
 enum custom_keycodes {
   // --- Original Macro
     M_LANG,
-    M_BRC,
-    M_QUOT,
-    M_MINUS,
-    M_S_MINUS,
+    M_S_MINS,
+    M_S_EQL,
     WIN_TAB,
     WIN_LEFT,
     WIN_RGHT,
+};
+
+enum tapdances{
+  TD_BRC = 0,
+  TD_QUOT,
+  TD_MINS,
+};
+
+#define M_BRC  TD(TD_BRC)
+#define M_QUOT  TD(TD_BRC)
+#define M_MINS  TD(TD_MINS)
+
+tap_dance_action_t tap_dance_actions[] = {
+  [TD_BRC] = ACTION_TAP_DANCE_DOUBLE(KC_LBRC, KC_RBRC),
+  [TD_QUOT] = ACTION_TAP_DANCE_DOUBLE(KC_QUOT, KC_BSLS),
+  [TD_MINS] = ACTION_TAP_DANCE_DOUBLE(KC_MINS, KC_EQL),
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -44,8 +58,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
-  KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
-  LCTL_T(KC_TAB), KC_A,    KC_S,      KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
+  KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    TD(TD_BRC),
+  LCTL_T(KC_TAB), KC_A,    KC_S,      KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, TD(TD_QUOT),
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
   KC_CAPS, KC_NO, KC_NO, KC_LALT,  KC_LGUI, LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),M_LANG, KC_RALT, KC_NO, KC_NO,KC_NO
 ),
@@ -62,8 +76,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  S(KC_GRV),S(KC_1),S(KC_2), S(KC_3), S(KC_4),S(KC_5),S(KC_6), S(KC_7), S(KC_8), S(KC_9),S(KC_0), M_S_MINUS,
-  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,   _______, _______,
+  S(KC_GRV),S(KC_1),S(KC_2), S(KC_3), S(KC_4),S(KC_5),S(KC_6), S(KC_7), S(KC_8), S(KC_9),S(KC_0), M_S_MINS,
+  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,   _______, M_S_EQL,
   _______, _______, _______, _______, _______, _______, WIN_LEFT,WIN_TAB,WIN_TAB, WIN_RGHT, _______, _______,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, _______
 ),
@@ -80,7 +94,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   M_MINUS,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,   TD(TD_MINS),
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, KC_F12,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -110,34 +124,6 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
-
-// --- 長押し新規実装
-// user_mt(record, ホールド時キーコードー, タップ時のキーコード, モディファイアキー押下判定のための変数, trueならTAPPING_TERMより長押ししたときにタップと判定する)
-static bool pressed = false;
-static uint16_t pressed_time = 0;
-static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, uint16_t layer_code, bool *pressed, uint16_t *pressed_time) {
-    if (record->event.pressed) {
-        *pressed = true;
-        *pressed_time = record->event.time;
-    } else {
-        if (!*pressed) {
-            unregister_code(modcode);
-        } else {
-            if (timer_elapsed(*pressed_time) < TAPPING_TERM) {
-                if (layer_code != 0) register_code(layer_code);
-                tap_code(modcode);
-                if (layer_code != 0) unregister_code(layer_code);
-            } else {
-                if (layer_code != 0) register_code(layer_code);
-                tap_code(keycode);
-                if (layer_code != 0) unregister_code(layer_code);
-            }
-            *pressed = false;
-            *pressed_time = 0;
-        }
-    }
-}
-// --- 新規長押し実装関数
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
@@ -176,29 +162,21 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             register_code(KC_LALT);
             tap_code(KC_GRAVE);
             unregister_code(KC_LALT);
-        } else {
         }
         break;
-    // --- 新実装
-    // 長押しマクロ([ or ])
-    case M_BRC:
-        user_mt(record, KC_LBRC, KC_RBRC, 0, &pressed, &pressed_time);
-        return false;
+    case M_S_MINS: // ダブルタップ実装まで暫定策
+        if (record->event.pressed) {
+            register_code(KC_RSFT);
+            tap_code(KC_MINS);
+            unregister_code(KC_RSFT);
+        }
         break;
-    // 長押しマクロ(' or \)
-    case M_QUOT:
-        user_mt(record, KC_QUOT, KC_BSLS, 0, &pressed, &pressed_time);
-        return false;
-        break;
-    // 長押しマクロ(- or =)
-    case M_MINUS:
-        user_mt(record, KC_MINUS, KC_EQL, 0, &pressed, &pressed_time);
-        return false;
-        break;
-    // 長押しマクロ(_ or +)
-    case M_S_MINUS:
-        user_mt(record, KC_MINUS, KC_EQL, KC_LSFT, &pressed, &pressed_time);
-        return false;
+    case M_S_EQL: // ダブルタップ実装まで暫定策
+        if (record->event.pressed) {
+            register_code(KC_LSFT);
+            tap_code(KC_EQL);
+            unregister_code(KC_LSFT);
+        }
         break;
     }
     return true;

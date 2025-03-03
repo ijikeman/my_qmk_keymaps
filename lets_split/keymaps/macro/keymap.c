@@ -176,7 +176,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             register_code(KC_LALT);
             tap_code(KC_GRAVE);
             unregister_code(KC_LALT);
-        } else {
         }
         break;
     // --- 新実装
