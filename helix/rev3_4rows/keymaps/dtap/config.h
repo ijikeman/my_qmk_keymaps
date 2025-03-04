@@ -58,5 +58,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //#define NO_ACTION_LAYER
 //#define NO_ACTION_TAPPING
 //#define NO_ACTION_ONESHOT
-#define TAPPING_TERM 200
+#define TAPPING_TERM 175
 #define TAPPING_TERM_PER_KEY
+#define DEBOUNCE 20 # チャタリング解消確認中
