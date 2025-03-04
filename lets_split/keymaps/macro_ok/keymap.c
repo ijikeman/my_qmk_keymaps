@@ -1,4 +1,4 @@
- #include QMK_KEYBOARD_H
+#include QMK_KEYBOARD_H
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -14,6 +14,10 @@ enum layer_names {
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
   KANA = SAFE_RANGE,
+  M_BRC,
+  M_MINUS,
+  M_QUOT,
+  M_S_MINUS,
 };
 
 #define LOWER  MO(_LOWER)
@@ -25,9 +29,9 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* Qwerty
  * ,-----------------------------------------------------------------------------------.
- * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | DEL  |
+ * | Esc  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  | []  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |CTL/Tab|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  |  "   |
+ * |CTL/Tab|   A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | '\ |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -35,15 +39,15 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
-   KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
-LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-   KC_CAPS,KC_NO,   KC_NO,KC_LALT,KC_LGUI,LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),KANA,KC_NO,KC_NO, KC_NO,KC_NO
+  KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
+LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+  KC_CAPS,KC_NO,   KC_NO,KC_LALT,KC_LGUI,LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),KANA,KC_NO,KC_NO, KC_NO,KC_NO
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
- * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  DEL |
+ * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  _+ |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |      |      | LEFT | DOWN |  UP  | RGHT |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
@@ -53,7 +57,7 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, KC_DEL,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
   _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,   _______, _______,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, KC_F12,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, _______
@@ -61,7 +65,7 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
 
 /* Raise
  * ,-----------------------------------------------------------------------------------.
- * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | Del  |
+ * |   `  |   1  |   2  |   3  |   4  |   5  |   6  |   7  |   8  |   9  |   0  | -=  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |  [   |  ]   |  \   |  =   |  -   |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -71,7 +75,7 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(
-  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_DEL,
+  KC_GRV,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    M_MINUS,
   _______, _______, _______, _______, _______, _______, _______, KC_LBRC, KC_RBRC, KC_BSLS, KC_EQL, KC_MINS,
   _______, _______, _______, _______, _______, _______, _______, KC_LCBR, KC_RCBR, KC_PIPE, KC_PLUS, KC_UNDS,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
@@ -79,9 +83,9 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -102,6 +106,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
 }
 
+static uint16_t pressed_time = 0;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case KANA:
@@ -112,6 +117,62 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
       }
       return false;
       break;
+    case M_BRC:
+        if (record->event.pressed) { // when keycode is pressed
+            pressed_time = record->event.time;
+        } else { // when keycode is released
+            if (TIMER_DIFF_16(record->event.time, pressed_time) < TAPPING_TERM) {
+              tap_code(KC_LBRC);
+              pressed_time = 0;
+            } else {
+              tap_code(KC_RBRC);
+              pressed_time = 0;
+            }
+        }
+        break;
+    case M_QUOT:
+        if (record->event.pressed) { // when keycode is pressed
+            pressed_time = record->event.time;
+        } else { // when keycode is released
+            if (TIMER_DIFF_16(record->event.time, pressed_time) < TAPPING_TERM) {
+              tap_code(KC_QUOT);
+              pressed_time = 0;
+            } else {
+              tap_code(KC_BSLS);
+              pressed_time = 0;
+            }
+        }
+        break;
+    case M_MINUS:
+        if (record->event.pressed) { // when keycode is pressed
+            pressed_time = record->event.time;
+        } else { // when keycode is released
+            if (TIMER_DIFF_16(record->event.time, pressed_time) < TAPPING_TERM) {
+              tap_code(KC_MINUS);
+              pressed_time = 0;
+            } else {
+              tap_code(KC_EQL);
+              pressed_time = 0;
+            }
+        }
+        break;
+    case M_S_MINUS:
+        if (record->event.pressed) { // when keycode is pressed
+            pressed_time = record->event.time;
+        } else { // when keycode is released
+            if (TIMER_DIFF_16(record->event.time, pressed_time) < TAPPING_TERM) {
+              register_code(KC_LSFT);
+              tap_code(KC_MINUS);
+              unregister_code(KC_LSFT);
+              pressed_time = 0;
+            } else {
+              register_code(KC_LSFT);
+              tap_code(KC_EQL);
+              unregister_code(KC_LSFT);
+              pressed_time = 0;
+            }
+        }
+        break;
   }
   return true;
 }
