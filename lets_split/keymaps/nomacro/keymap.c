@@ -1,4 +1,4 @@
- #include QMK_KEYBOARD_H
+#include QMK_KEYBOARD_H
 
 // Each layer gets a name for readability, which is then used in the keymap matrix below.
 // The underscores don't mean anything - you can have a layer called STUFF or any other name.
@@ -9,11 +9,6 @@ enum layer_names {
     _LOWER,
     _RAISE,
     _ADJUST
-};
-
-// Defines the keycodes used by our macros in process_record_user
-enum custom_keycodes {
-  KANA = SAFE_RANGE,
 };
 
 #define LOWER  MO(_LOWER)
@@ -31,14 +26,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | CAPS |     |      |  Alt  | GUI |LOW/SPC|RAI/BSP|    |       |      |      |      |
+ * | CAPS |     |      |  Alt  | GUI | Lower | Raise|Ctl-Spc|       |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
-   KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
+  KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_DEL,
 LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_QUOT,
-   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-   KC_CAPS,KC_NO,   KC_NO,KC_LALT,KC_LGUI,LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),KANA,KC_NO,KC_NO, KC_NO,KC_NO
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+  KC_CAPS,KC_NO,   KC_NO,KC_LALT,KC_LGUI,LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),LALT(KC_GRV),KC_NO,KC_NO, KC_NO,KC_NO
 ),
 
 /* Lower
@@ -100,16 +95,4 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
-}
-
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  switch (keycode) {
-    case KANA:
-      if (record->event.pressed) {
-          tap_code16(LALT(KC_GRAVE));
-      }
-      return false;
-      break;
-  }
-  return true;
 }
