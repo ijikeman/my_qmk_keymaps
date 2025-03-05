@@ -79,9 +79,9 @@ LCTL_T(KC_TAB),KC_A, KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,
 
 /* Adjust (Lower + Raise)
  * ,-----------------------------------------------------------------------------------.
- * |      | Reset|      |      |      |      |      |      |      |      |      |  Del |
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |Aud on|Audoff|AGnorm|AGswap|Qwerty|Colemk|Dvorak|      |      |
+ * |      |      |      |      |      |             |      |      |      |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -107,8 +107,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     case KANA:
       if (record->event.pressed) {
           tap_code16(LALT(KC_GRAVE));
-      } else {
-        unregister_code(KC_LNG1);
       }
       return false;
       break;
