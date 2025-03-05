@@ -33,7 +33,6 @@ enum custom_keycodes {
 
 // MACRO
   ,
-  M_LANG,
   M_BRC,
   M_QUOT,
   M_MINUS,
@@ -65,7 +64,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
       LCTL_T(KC_TAB), KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
       KC_LSFT,KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-      KC_CAPS,KC_NO,KC_NO,KC_LALT,KC_LGUI,LT(LOWER,KC_SPC),KC_SPC,KC_SPC,LT(RAISE, KC_BSPC),   M_LANG,    KC_NO, KC_NO, KC_NO,   KC_NO
+      KC_CAPS,KC_NO,KC_NO,KC_LALT,KC_LGUI,LT(LOWER,KC_SPC),KC_SPC,KC_SPC,LT(RAISE, KC_BSPC),   KANA,    KC_NO, KC_NO, KC_NO,   KC_NO
       ),
 
   /* Lower
@@ -243,13 +242,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_RGHT);
             unregister_code(KC_LCTL);
             unregister_code(KC_LGUI);
-        }
-        break;
-    case M_LANG: // 日本語切り替え
-        if (record->event.pressed) {
-            register_code(KC_LALT);
-            tap_code(KC_GRAVE);
-            unregister_code(KC_LALT);
         }
         break;
 
