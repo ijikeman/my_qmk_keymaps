@@ -157,11 +157,11 @@ static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, uin
         } else {
             if (timer_elapsed(*pressed_time) < TAPPING_TERM) {
                 if (layer_code != 0) register_code(layer_code);
-                tap_code(modcode);
+                tap_code16(modcode);
                 if (layer_code != 0) unregister_code(layer_code);
             } else {
                 if (layer_code != 0) register_code(layer_code);
-                tap_code(keycode);
+                tap_code16(keycode);
                 if (layer_code != 0) unregister_code(layer_code);
             }
             *pressed = false;
