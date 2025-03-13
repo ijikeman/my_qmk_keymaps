@@ -11,8 +11,8 @@ enum layer_names {
     _ADJUST
 };
 
-#define LOWER  LT(_LOWER, KC_BSPC)
-#define RAISE  LT(_RAISE,KC_SPC)
+#define LOWER  LT(_LOWER, KC_SPC)
+#define RAISE  LT(_RAISE, KC_BSPC)
 #define MLCTL  LCTL_T(KC_TAB)
 #define MLANG1 LALT(KC_GRV)
 #define MLANG2 LCTL(KC_SPC)
