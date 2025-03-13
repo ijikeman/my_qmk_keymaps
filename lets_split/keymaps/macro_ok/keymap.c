@@ -11,19 +11,21 @@ enum layer_names {
     _ADJUST
 };
 
-#define LOWER  LT(_LOWER, KC_BSPC)
-#define RAISE  LT(_RAISE,KC_SPC)
+#define LOWER  LT(_LOWER, KC_SPC)
+#define RAISE  LT(_RAISE, KC_BSPC)
 #define MLCTL  LCTL_T(KC_TAB)
 #define MLANG1 LALT(KC_GRV)
 #define MLANG2 LCTL(KC_SPC)
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-    KANA = SAFE_RANGE,
-    M_BRC,
+    M_BRC = SAFE_RANGE,
     M_MINUS,
     M_QUOT,
     M_S_MINUS,
+    WIN_TAB,
+    WIN_LEFT,
+    WIN_RGHT,
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -49,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  _+  |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |MOUSE-L|LEFT | DOWN |  UP  | RGHT |MOUSE-R|
+ * |      |      |      |      |      |      | LEFT | DOWN |  UP  | RGHT |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |  F1  |  F2  |  F3  |  F4  |  F5  |  F6  |  F7  |   F8  |  F9 [  F10 | F11  | F12  |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -58,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ortho_4x12(
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
-  _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,  KC_MS_BTN3,
+  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______,
   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, KC_F12,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, QK_BOOT
 ),
@@ -109,14 +111,35 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 static uint16_t pressed_time = 0;
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case KANA:
-      if (record->event.pressed) {
-          tap_code16(LALT(KC_GRAVE));
-      } else {
-        unregister_code(KC_LNG1);
-      }
-      return false;
-      break;
+    // Window切り替え機能(on Windows)
+    case WIN_TAB:
+        if (record->event.pressed) {
+            register_code(KC_LGUI);
+            register_code(KC_TAB);
+            unregister_code(KC_TAB);
+            unregister_code(KC_LGUI);
+        }
+        break;
+    case WIN_LEFT:
+        if (record->event.pressed) {
+            register_code(KC_LGUI);
+            register_code(KC_LCTL);
+            register_code(KC_LEFT);
+            unregister_code(KC_LEFT);
+            unregister_code(KC_LCTL);
+            unregister_code(KC_LGUI);
+        }
+        break;
+    case WIN_RGHT:
+        if (record->event.pressed) {
+            register_code(KC_LGUI);
+            register_code(KC_LCTL);
+            register_code(KC_RGHT);
+            unregister_code(KC_RGHT);
+            unregister_code(KC_LCTL);
+            unregister_code(KC_LGUI);
+        }
+        break;
     case M_BRC:
         if (record->event.pressed) { // when keycode is pressed
             pressed_time = record->event.time;

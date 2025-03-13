@@ -19,8 +19,7 @@ enum layer_names {
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-    KANA = SAFE_RANGE,
-    M_BRC,
+    M_BRC = SAFE_RANGE,
     M_MINUS,
     M_QUOT,
     M_S_MINUS,
@@ -52,7 +51,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  _/+ |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      |MOUSE-L|LEFT | DOWN |  UP  | RGHT |MOUSE-R|
+ * |      |      |      |      |      |      | LEFT | DOWN |  UP  | RGHT |      |      |
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |      | WIN_L|WIN_T |WIN_R |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -61,7 +60,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ortho_4x12(
   S(KC_GRV),S(KC_1),S(KC_2), S(KC_3), S(KC_4),S(KC_5),S(KC_6), S(KC_7), S(KC_8), S(KC_9),S(KC_0), M_S_MINUS,
-  _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,  KC_MS_BTN3,
+  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______,
   _______, _______, _______, _______, _______, _______, WIN_LEFT,WIN_TAB, WIN_RGHT, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, QK_BOOT 
 ),
@@ -166,14 +165,6 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             unregister_code(KC_RGHT);
             unregister_code(KC_LCTL);
             unregister_code(KC_LGUI);
-        }
-        break;
-    // 日本語切り替え
-    case M_LANG:
-        if (record->event.pressed) {
-            register_code(KC_LALT);
-            tap_code(KC_GRAVE);
-            unregister_code(KC_LALT);
         }
         break;
     // --- 新実装
