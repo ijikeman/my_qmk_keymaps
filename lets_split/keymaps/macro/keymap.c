@@ -11,20 +11,18 @@ enum layer_names {
     _ADJUST
 };
 
-#define LOWER  MO(_LOWER)
-#define RAISE  MO(_RAISE)
-#define ADJUST MO(_ADJUST)
+#define LOWER  LT(_LOWER, KC_BSPC)
+#define RAISE  LT(_RAISE,KC_SPC)
+#define MLCTL  LCTL_T(KC_TAB)
+#define MLANG1 LALT(KC_GRV)
+#define MLANG2 LCTL(KC_SPC)
 
-#define QWERTY PDF(_QWERTY)
-//#define COLEMAK PDF(_COLEMAK)
-//#define DVORAK PDF(_DVORAK)
-
+// Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  // --- Original Macro
-    M_LANG,
+    KANA = SAFE_RANGE,
     M_BRC,
-    M_QUOT,
     M_MINUS,
+    M_QUOT,
     M_S_MINUS,
     WIN_TAB,
     WIN_LEFT,
@@ -45,26 +43,26 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
   KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
-  LCTL_T(KC_TAB), KC_A,    KC_S,      KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
+  MLCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  KC_CAPS, KC_NO, KC_NO, KC_LALT,  KC_LGUI, LT(_LOWER,KC_SPC),LT(_RAISE, KC_BSPC),M_LANG, KC_RALT, KC_NO, KC_NO,KC_NO
+  KC_CAPS, KC_NO, MLANG1, KC_LALT, KC_LGUI,   LOWER,   RAISE,  MLANG2,    KC_NO,   KC_NO,   KC_NO,    KC_NO
 ),
 
 /* Lower
  * ,-----------------------------------------------------------------------------------.
  * |   ~  |   !  |   @  |   #  |   $  |   %  |   ^  |   &  |   *  |   (  |   )  |  _/+ |
  * |------+------+------+------+------+-------------+------+------+------+------+------|
- * |      |      |      |      |      |      | LEFT | DOWN |  UP  | RGHT |      |      |
+ * |      |      |      |      |      |      |MOUSE-L|LEFT | DOWN |  UP  | RGHT |MOUSE-R|
  * |------+------+------+------+------+------|------+------+------+------+------+------|
- * |      |      |      |      |      |      | WIN_L|WIN_T |WIN_T |WIN_R |      |      |
+ * |      |      |      |      |      |      | WIN_L|WIN_T |WIN_R |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * | RESET|      |      |      |      |      | DEL  |      |      |      |      |      |
+ * |      |      |      |      |      |      | DEL  |      |      |      |      |RESET |
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
   S(KC_GRV),S(KC_1),S(KC_2), S(KC_3), S(KC_4),S(KC_5),S(KC_6), S(KC_7), S(KC_8), S(KC_9),S(KC_0), M_S_MINUS,
-  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,   _______, _______,
-  _______, _______, _______, _______, _______, _______, WIN_LEFT,WIN_TAB,WIN_TAB, WIN_RGHT, _______, _______,
+  _______, _______, _______, _______, _______, _______, KC_MS_BTN1, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT,  KC_MS_BTN3,
+  _______, _______, _______, _______, _______, _______, WIN_LEFT,WIN_TAB, WIN_RGHT, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, QK_BOOT 
 ),
 
@@ -76,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * |------+------+------+------+------+------|------+------+------+------+------+------|
  * |      |      |      |      |      |      |      |      |      |      |      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      | RESET|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
  * `-----------------------------------------------------------------------------------'
  */
 [_RAISE] = LAYOUT_ortho_4x12(

@@ -20,12 +20,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #pragma once
 
- // place overrides here
-#define DEFAULT_LAYER_SONGS { SONG(QWERTY_SOUND), \
-                              SONG(COLEMAK_SOUND), \
-                              SONG(DVORAK_SOUND) \
-                            }
-
 /* Select hand configuration */
 #define TAPPING_TERM 90 // 長押しによる切りMacroキー替え時間をmsで指定
 #define DEBOUNCE 20 // チャタリング解消確認中
+
+/* Mouse Keys */
+MOUSEKEY_ENABLE = yes
