@@ -37,7 +37,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 * |------+------+------+------+------+------|------+------+------+------+------+------|
 * |SFT/CAP|  Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |  /   | ENTER|
 * |------+------+------+------+------+------+------+------+------+------+------+------|
-* |      |      |      | ALT  |  GUI |SPC/LOW|BS/RAI| IME| ALT  |      |      |      |
+* |      |      | LANG | ALT  |  GUI | LOWER| RAISE| LANG | ALT  |      |      |      |
 * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_LOWER] = LAYOUT_ortho_4x12(
-  S(KC_GRV),S(KC_1),S(KC_2), S(KC_3), S(KC_4),S(KC_5),S(KC_6), S(KC_7), S(KC_8), S(KC_9),S(KC_0), M_S_MINUS,
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
   _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, _______, _______,
   _______, _______, _______, _______, _______, _______,  _______, WIN_LEFT,WIN_TAB, WIN_RGHT, _______, _______,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, QK_BOOT 
