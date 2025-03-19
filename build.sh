@@ -1,3 +1,4 @@
+#!/bin/bash
 QMK_VERSION='0.22.0'
 
 # 第一引数はキーボード名
@@ -14,12 +15,12 @@ if [ ! -d "qmk_firmware" ]; then
 fi
 
 # 引数のフォルダにrules.mkを上書き
-cp rules.mk qmk_firmware/keyboards/$1
+#cp rules.mk qmk_firmware/keyboards/$1
 
 # キーマップのフォルダにoriginalフォルダを作成
-if [ ! -d "qmk_firmware/keyboards/$keyboard/keymaps/original" ]; then
-    mkdir qmk_firmware/keyboards/$keyboard/keymaps/original
-fi
+#if [ ! -d "qmk_firmware/keyboards/$keyboard/keymaps/original" ]; then
+#    mkdir qmk_firmware/keyboards/$keyboard/keymaps/original
+#fi
 
 # originalフォルダにキーボード名.keymap.cをコピー
 #cp $keyboard.keymap.c qmk_firmware/keyboards/$keyboard/keymaps/original/keymap.c
@@ -28,4 +29,4 @@ fi
 
 # qmk_firmwareに移動
 cd qmk_firmware
-util/docker_build.sh $1:default
+#util/docker_build.sh $1:default
