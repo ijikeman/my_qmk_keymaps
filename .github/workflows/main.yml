@@ -1,0 +1,38 @@
+name: Build QMK Firmware
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      QMK_BRANCH_NAME: ${{ secrets.QMK_BRANCH_NAME }}
+      KEYBOARD: ${{ secrets.KEYBOARD }}
+      REV: ${{ secrets.REV }}
+      KEYMAP: ${{ secrets.KEYMAP }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          repository: qmk/qmk_firmware
+          # 変数を別で指定
+          ref: ${{ env.QMK_BRANCH_NAME }}
+          submodules: true
+
+      - name: Clone My Qmk Keymaps
+        uses: actions/checkout@v2
+        with:
+          path: "./keyboards/${{ env.KEYBOARD }}"
+
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
+
+      - name: Compile
+        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}${{ env.REV }} -km ${{ env.KEYMAP }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex"
+          path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
