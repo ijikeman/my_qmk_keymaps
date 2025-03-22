@@ -80,4 +80,4 @@ jobs:
         with:
           name: builded-firmwares
           path: .build/*.hex
-          include-hidden-files: true
+          include-hidden-files: true # 隠しフォルダで*を指定する為
