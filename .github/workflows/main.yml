@@ -33,8 +33,9 @@ jobs:
         run: ./util/qmk_install.sh
 
       - name: Compile
-        run: ls -al ./
-        run: ls -al ./qmk_firmware
+        run:
+          ls -al ./
+          ls -al ./qmk_firmware
       #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
       # - uses: actions/upload-artifact@v4
