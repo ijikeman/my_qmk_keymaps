@@ -28,11 +28,11 @@ jobs:
       - name: Remove existing keyboards directory
         run: rm -rf keyboards
 
-      # qmk_firmware/に自身のリポジトリを設置
+      # qmk_firmware/に自身のリポジトリを./keyboards/として設置(qmk_firmware/keyboards/)
       - name: Checkout My Keyboards
         uses: actions/checkout@v4
         with:
-          path: keyboards
+          path: ./keyboards
 
       # qmk_install.shを実行して依存関係をインストール
       - name: Install dependencies
@@ -40,7 +40,7 @@ jobs:
 
       - name: Compile
         run:
-          ls -al ./bin/
+          which qmk
       #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
       # - uses: actions/upload-artifact@v4
