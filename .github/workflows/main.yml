@@ -62,7 +62,7 @@ jobs:
 
       - name: Compile qmk
         run: |
-          IFS=' ' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
+          IFS=',' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
           for entry in "${keyboards_rev_keymaps[@]}"; do
             echo $entry
           done
