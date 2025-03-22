@@ -79,4 +79,16 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: builded-firmwares
+          path: .build/*.hex
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: builded-firmwares
           path: ./qmk/.build/*.hex
+
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: builded-firmwares
+          path: ./qmk/qmk/.build/*.hex
+  
