@@ -60,6 +60,10 @@ jobs:
           echo $QMK_BRANCH_NAME
           echo $KEYBOARDS_REV_KEYMAPS
 
+      # qmk compileを実行
+      # KEYBOARDS_REV_KEYMAPSには、"keyboard:rev:keymap,keyboard:rev:keymap"の形式で複数指定
+      # entryは、"keyboard:rev:keymap"の形式で指定
+      # partsは、"keyboard", "rev", "keymap"の形式で分割
       - name: Compile qmk
         run: |
           IFS=',' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
@@ -74,7 +78,7 @@ jobs:
       - name: Run
         run: ls -al ./.build/
 
-#        - uses: actions/upload-artifact@v4
-#        with:
-#          name: builded-firmwares
-#          path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
+      - uses: actions/upload-artifact@v4
+        with:
+          name: builded-firmwares
+          path: ./.build/*.hex
