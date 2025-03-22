@@ -34,19 +34,13 @@ jobs:
         with:
           path: keyboards
 
+      # qmk_install.shを実行して依存関係をインストール
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
+
       - name: Compile
         run:
-          ls -al .
-          ls -al ./keyboards
-
-      # # qmk_install.shを実行して依存関係をインストール
-      # - name: Install dependencies
-      #   run: ./util/qmk_install.sh
-      #   working-directory: ./qmk_firmware
-
-      # - name: Compile
-      #   run:
-      #     ls -al ./bin/
+          ls -al ./bin/
       #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
       # - uses: actions/upload-artifact@v4
