@@ -27,3 +27,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           path: qmk_firmware/keyboards
+
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
+
+      - name: Compile
+        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}${{ env.REV }} -km ${{ env.KEYMAP }}
