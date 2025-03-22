@@ -23,18 +23,3 @@ jobs:
       - name: Remove existing keyboards directory
         run: rm -rf qmk_firmware/keyboards
 
-      - name: Checkout My Keyboards
-        uses: actions/checkout@v4
-        with:
-          path: qmk_firmware/keyboards
-
-      - name: Install dependencies
-        run: ./util/qmk_install.sh
-
-      - name: Compile
-        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}${{ env.REV }} -km ${{ env.KEYMAP }}
-
-      - uses: actions/upload-artifact@v2
-        with:
-          name: "${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex"
-          path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
