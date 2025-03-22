@@ -79,4 +79,4 @@ jobs:
       - uses: actions/upload-artifact@v4.6.2
         with:
           name: builded-firmwares
-          path: .build/helix_rev3_4rows_macro.hex
+          path: .build/*.hex
