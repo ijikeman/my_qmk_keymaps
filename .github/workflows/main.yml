@@ -20,49 +20,66 @@ jobs:
           echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .env | cut -d '=' -f2)" >> $GITHUB_ENV
           echo "KEYBOARDS_REV_KEYMAPS=$(grep KEYBOARDS_REV_KEYMAPS .env | cut -d '=' -f2-)" >> $GITHUB_ENV
 
-      # qmk_firmwareをcheckout
-      - name: Checkout QMK Firmware
-        uses: actions/checkout@v4
-        with:
-          repository: qmk/qmk_firmware
-          ref: ${{ env.QMK_BRANCH_NAME }}
-          submodules: true
+      - name: confirm env
+        run: |
+          echo $QMK_BRANCH_NAME
+          echo $KEYBOARDS_REV_KEYMAPS
 
-      # qmk_firmware/keyboardsを削除
-      - name: Remove existing keyboards directory
-        run: rm -rf keyboards
+      # # qmk_firmwareをcheckout
+      # - name: Checkout QMK Firmware
+      #   uses: actions/checkout@v4
+      #   with:
+      #     repository: qmk/qmk_firmware
+      #     ref: ${{ env.QMK_BRANCH_NAME }}
+      #     submodules: true
 
-      # qmk_firmware/に自身のリポジトリを./keyboards/として設置(qmk_firmware/keyboards/)
-      - name: Checkout My Keyboards
-        uses: actions/checkout@v4
-        with:
-          path: ./keyboards
+      # # qmk_firmware/keyboardsを削除
+      # - name: Remove existing keyboards directory
+      #   run: rm -rf keyboards
 
-      # qmk_install.shを実行して依存関係をインストール
-      - name: Install dependencies
-        run: ./util/qmk_install.sh
+      # # qmk_firmware/に自身のリポジトリを./keyboards/として設置(qmk_firmware/keyboards/)
+      # - name: Checkout My Keyboards
+      #   uses: actions/checkout@v4
+      #   with:
+      #     path: ./keyboards
 
-      - name: Install qmk
-        run:
-          pip install qmk
+      # # qmk_install.shを実行して依存関係をインストール
+      # - name: Install dependencies
+      #   run: ./util/qmk_install.sh
 
-      - name: Setup qmk
-        run:
-          qmk setup
+      # - name: Install qmk
+      #   run:
+      #     pip install qmk
+
+      # - name: Setup qmk
+      #   run:
+      #     qmk setup
+
+      # - name: confirm env
+      #   run: |
+      #     echo $QMK_BRANCH_NAME
+      #     echo $KEYBOARDS_REV_KEYMAPS
 
       - name: Compile qmk
         run: |
           IFS=' ' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
           for entry in "${keyboards_rev_keymaps[@]}"; do
-            IFS=':' read -r -a parts <<< "$entry"
-            keyboard="${parts[0]}"
-            rev="${parts[1]}"
-            keymap="${parts[2]}"
-            qmk compile -kb "$keyboard/$rev" -km "$keymap"
+            echo $entry
           done
 
-      - name: Run
-        run: ls -al ./.build/
+      # - name: Compile qmk
+      #   run: |
+      #     IFS=' ' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
+      #     for entry in "${keyboards_rev_keymaps[@]}"; do
+      #       IFS=':' read -r -a parts <<< "$entry"
+      #       keyboard="${parts[0]}"
+      #       rev="${parts[1]}"
+      #       keymap="${parts[2]}"
+      #       qmk compile -kb "$keyboard/$rev" -km "$keymap"
+      #     done
+
+      # - name: Run
+      #   run: ls -al ./.build/
 
 #        - uses: actions/upload-artifact@v4
 #        with:
