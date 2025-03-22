@@ -33,9 +33,11 @@ jobs:
         run: ./util/qmk_install.sh
 
       - name: Compile
-        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
+        run: ls -al ./
+        run: ls -al ./qmk_firmware
+      #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: builded-firmwares
-          path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
+      # - uses: actions/upload-artifact@v4
+      #   with:
+      #     name: builded-firmwares
+      #     path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
