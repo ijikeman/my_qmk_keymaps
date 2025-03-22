@@ -7,17 +7,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      QMK_BRANCH_NAME: ${{ secrets.QMK_BRANCH_NAME }}
-      KEYBOARD: ${{ secrets.KEYBOARD }}
-      REV: ${{ secrets.REV }}
-      KEYMAP: ${{ secrets.KEYMAP }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Load environment variables
+        run: cat .env >> $GITHUB_ENV
+
+      - name: Checkout QMK Firmware
+        uses: actions/checkout@v4
         with:
           repository: qmk/qmk_firmware
-          ref: ${{ env.QMK_BRANCH_NAME }}
+          ref: $BRANCH_NAME
           submodules: true
 
       - name: Remove existing keyboards directory
@@ -32,4 +33,9 @@ jobs:
         run: ./util/qmk_install.sh
 
       - name: Compile
-        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}${{ env.REV }} -km ${{ env.KEYMAP }}
+        run: ./bin/qmk compile -kb $KEYBOARD$REV -km $KEYMAP
+
+#      - uses: actions/upload-artifact@v3
+#        with:
+#          name: "$KEYBOARD_$REV_$KEYMAP.hex"
+#          path: ./.build/$KEYBOARD_$REV_$KEYMAP.hex
