@@ -19,3 +19,19 @@ jobs:
           repository: qmk/qmk_firmware
           ref: ${{ env.QMK_BRANCH_NAME }}
           submodules: true
+
+      - name: Clone My Qmk Keymaps
+        uses: actions/checkout@v4
+        with:
+          path: "./keyboards/${{ env.KEYBOARD }}"
+
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
+
+      - name: Compile
+        run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}${{ env.REV }} -km ${{ env.KEYMAP }}
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: "${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex"
+          path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
