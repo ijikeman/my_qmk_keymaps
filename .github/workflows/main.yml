@@ -76,7 +76,8 @@ jobs:
       - name: Confirm builded firmwares
         run: echo $HOME
 
-      - uses: actions/upload-artifact@v3.2.1
+      - uses: actions/upload-artifact@v4.6.2
         with:
           name: builded-firmwares
           path: .build/*.hex
+          include-hidden-files: true
