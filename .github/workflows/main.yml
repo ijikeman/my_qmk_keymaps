@@ -13,8 +13,6 @@ jobs:
         uses: actions/checkout@v4
 
       # .envファイルを読み込みGITHUB_ENVに設定
-#      - name: Load environment variables
-#        run: cat .env >> $GITHUB_ENV
       - name: Load environment variables
         run: |
           echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .env | cut -d '=' -f2)" >> $GITHUB_ENV
@@ -75,10 +73,10 @@ jobs:
             qmk compile -kb "$keyboard/$rev" -km "$keymap"
           done
 
-      - name: Run
-        run: pwd
+      - name: Confirm builded firmwares
+        run: ls -al ./.build
 
-      # - uses: actions/upload-artifact@v4
-      #   with:
-      #     name: builded-firmwares
-      #     path: ./.build/*.hex
+      - uses: actions/upload-artifact@v4
+        with:
+          name: builded-firmwares
+          path: ./qmk/.build/*.hex
