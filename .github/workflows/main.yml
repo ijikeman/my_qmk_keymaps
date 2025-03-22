@@ -35,7 +35,7 @@ jobs:
       - name: Compile
         run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         with:
           name: "${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex"
           path: ./.build/${{ env.KEYBOARD }}_${{ env.REV }}_${{ env.KEYMAP }}.hex
