@@ -32,11 +32,12 @@ jobs:
       - name: Checkout My Keyboards
         uses: actions/checkout@v4
         with:
-          path: .
+          path: keyboards
 
       - name: Compile
         run:
-          ls -al ../../
+          ls -al .
+          ls -al ./keyboards
 
       # # qmk_install.shを実行して依存関係をインストール
       # - name: Install dependencies
