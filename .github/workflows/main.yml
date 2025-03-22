@@ -22,11 +22,11 @@ jobs:
 
       - name: Remove existing keyboards directory
         run: rm -rf qmk_firmware/keyboards
-  
-      - name: Clone My Qmk Keymaps
+
+      - name: Checkout My Keyboards
         uses: actions/checkout@v4
         with:
-          path: "./keyboards/"
+          path: qmk_firmware/keyboards
 
       - name: Install dependencies
         run: ./util/qmk_install.sh
