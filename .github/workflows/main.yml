@@ -74,21 +74,9 @@ jobs:
           done
 
       - name: Confirm builded firmwares
-        run: ls -al ./.build
+        run: echo $HOME
 
       - uses: actions/upload-artifact@v4
         with:
           name: builded-firmwares
-          path: .build/*.hex
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: builded-firmwares
-          path: ./qmk/.build/*.hex
-
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: builded-firmwares
-          path: ./qmk/qmk/.build/*.hex
-  
+          path: /home/runner/work/qmk/qmk/.build/*.hex
