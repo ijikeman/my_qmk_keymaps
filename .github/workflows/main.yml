@@ -79,4 +79,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: builded-firmwares
-          path: /home/runner/work/qmk/qmk/.build/helix_rev3_4rows_macro.hex
+          path: .build/helix_rev3_4rows_macro.hex
