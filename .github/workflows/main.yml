@@ -13,8 +13,12 @@ jobs:
         uses: actions/checkout@v4
 
       # .envファイルを読み込みGITHUB_ENVに設定
+#      - name: Load environment variables
+#        run: cat .env >> $GITHUB_ENV
       - name: Load environment variables
-        run: cat .env >> $GITHUB_ENV
+        run: |
+          echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .env | cut -d '=' -f2)" >> $GITHUB_ENV
+          echo "KEYBOARDS_REV_KEYMAPS=$(grep KEYBOARDS_REV_KEYMAPS .env | cut -d '=' -f2-)" >> $GITHUB_ENV
 
       # qmk_firmwareをcheckout
       - name: Checkout QMK Firmware
@@ -42,10 +46,20 @@ jobs:
         run:
           pip install qmk
 
-      - name: Compile
+      - name: Setup qmk
         run:
-          qmk setup && qmk compile
-          # -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
+          qmk setup
+
+      - name: Compile qmk
+        run: |
+          IFS=' ' read -r -a keyboards_rev_keymaps <<< "${{ env.KEYBOARDS_REV_KEYMAPS }}"
+          for entry in "${keyboards_rev_keymaps[@]}"; do
+            IFS=':' read -r -a parts <<< "$entry"
+            keyboard="${parts[0]}"
+            rev="${parts[1]}"
+            keymap="${parts[2]}"
+            qmk compile -kb "$keyboard/$rev" -km "$keymap"
+          done
 
       - name: Run
         run: ls -al ./.build/
