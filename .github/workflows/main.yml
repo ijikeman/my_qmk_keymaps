@@ -27,7 +27,7 @@ jobs:
       - name: Checkout My Keyboards
         uses: actions/checkout@v4
         with:
-          path: keyboards
+          path: ./
 
       # - name: Install dependencies
       #   run: ./util/qmk_install.sh
