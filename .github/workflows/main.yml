@@ -36,7 +36,8 @@ jobs:
 
       # qmk_install.shを実行して依存関係をインストール
       - name: Install dependencies
-        run: ./util/qmk_install.sh
+        run: ../util/qmk_install.sh
+        working-directory: ./qmk_firmware
 
       - name: Compile
         run:
