@@ -20,10 +20,13 @@ jobs:
           ref: ${{ env.QMK_BRANCH_NAME }}
           submodules: true
 
+      - name: Remove existing keyboards directory
+        run: rm -rf qmk_firmware/keyboards
+  
       - name: Clone My Qmk Keymaps
         uses: actions/checkout@v4
         with:
-          path: "./keyboards/${{ env.KEYBOARD }}"
+          path: "./keyboards/"
 
       - name: Install dependencies
         run: ./util/qmk_install.sh

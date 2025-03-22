@@ -28,7 +28,7 @@ fi
 
 # keyboardsの対象フォルダを入れ替え
 rm -rf ${QMK_NAME}/keyboards/${keyboard_name}
-cp -Rp ${keyboard_name} ${QMK_NAME}/keyboards/
+cp -Rp keyboards ${QMK_NAME}/keyboards
 
 # qmk_firmwareに移動してコンパイル
 cd qmk_firmware
