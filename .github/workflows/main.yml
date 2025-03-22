@@ -36,7 +36,7 @@ jobs:
 
       - name: Compile
         run:
-          ls -al ./
+          ls -al ../
 
       # # qmk_install.shを実行して依存関係をインストール
       # - name: Install dependencies
