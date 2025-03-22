@@ -33,9 +33,9 @@ jobs:
         run: ./util/qmk_install.sh
 
       - name: Compile
-        run: ./bin/qmk compile -kb $KEYBOARD/$REV -km $KEYMAP
+        run: ./bin/qmk compile -kb ${{ KEYBOARD }}/${{ REV }} -km ${{ KEYMAP }}
 
       - uses: actions/upload-artifact@v3
         with:
-          name: "$KEYBOARD_$REV_$KEYMAP.hex"
-          path: ./.build/$KEYBOARD_$REV_$KEYMAP.hex
+          name: "${{ KEYBOARD }}_${{ REV }}_${{ KEYMAP }}.hex"
+          path: ./.build/${{ KEYBOARD }}_${{ REV }}_${{ KEYMAP }}.hex
