@@ -18,11 +18,6 @@ jobs:
           echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .github/.env | cut -d '=' -f2)" >> $GITHUB_ENV
           echo "KEYBOARDS_REV_KEYMAPS=$(grep KEYBOARDS_REV_KEYMAPS .github/.env | cut -d '=' -f2-)" >> $GITHUB_ENV
 
-      - name: confirm env
-        run: |
-          echo $QMK_BRANCH_NAME
-          echo $KEYBOARDS_REV_KEYMAPS
-
       # qmk_firmwareをcheckout
       - name: Checkout QMK Firmware
         uses: actions/checkout@v4
@@ -53,11 +48,6 @@ jobs:
         run:
           qmk setup
 
-      - name: confirm env
-        run: |
-          echo $QMK_BRANCH_NAME
-          echo $KEYBOARDS_REV_KEYMAPS
-
       # qmk compileを実行
       # KEYBOARDS_REV_KEYMAPSには、"keyboard:rev:keymap,keyboard:rev:keymap"の形式で複数指定
       # entryは、"keyboard:rev:keymap"の形式で指定
@@ -72,9 +62,6 @@ jobs:
             keymap="${parts[2]}"
             qmk compile -kb "$keyboard/$rev" -km "$keymap"
           done
-
-      - name: Confirm builded firmwares
-        run: echo $HOME
 
       - uses: actions/upload-artifact@v4.6.2
         with:
