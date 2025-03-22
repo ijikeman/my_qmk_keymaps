@@ -8,30 +8,39 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Load environmentする為に、一度checkoutする
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # .envファイルを読み込みGITHUB_ENVに設定
       - name: Load environment variables
         run: cat .env >> $GITHUB_ENV
 
+      # qmk_firmwareをcheckout
       - name: Checkout QMK Firmware
         uses: actions/checkout@v4
         with:
           repository: qmk/qmk_firmware
           ref: ${{ env.QMK_BRANCH_NAME }}
-          # submodules: true
+          submodules: true
 
+      # qmk_firmware/keyboardsを削除
       - name: Remove existing keyboards directory
         run: rm -rf keyboards
 
+      # qmk_firmware/に自身のリポジトリを設置
       - name: Checkout My Keyboards
         uses: actions/checkout@v4
         with:
-          path: ./
+          path: .
 
-      # - name: Install dependencies
-      #   run: ./util/qmk_install.sh
+      # qmk_install.shを実行して依存関係をインストール
+      - name: Install dependencies
+        run: ./util/qmk_install.sh
 
       - name: Compile
         run:
-          ls -al ./ ./keyboards/
+          ls -al ./bin/
       #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
       # - uses: actions/upload-artifact@v4
