@@ -40,6 +40,7 @@ jobs:
 
       - name: Compile
         run:
+          pip list
           which qmk
       #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
