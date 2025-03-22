@@ -15,8 +15,8 @@ jobs:
       # .envファイルを読み込みGITHUB_ENVに設定
       - name: Load environment variables
         run: |
-          echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .env | cut -d '=' -f2)" >> $GITHUB_ENV
-          echo "KEYBOARDS_REV_KEYMAPS=$(grep KEYBOARDS_REV_KEYMAPS .env | cut -d '=' -f2-)" >> $GITHUB_ENV
+          echo "QMK_BRANCH_NAME=$(grep QMK_BRANCH_NAME .github/.env | cut -d '=' -f2)" >> $GITHUB_ENV
+          echo "KEYBOARDS_REV_KEYMAPS=$(grep KEYBOARDS_REV_KEYMAPS .github/.env | cut -d '=' -f2-)" >> $GITHUB_ENV
 
       - name: confirm env
         run: |
