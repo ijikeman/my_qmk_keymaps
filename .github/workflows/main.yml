@@ -14,7 +14,7 @@ jobs:
       KEYMAP: ${{ secrets.KEYMAP }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           repository: qmk/qmk_firmware
           # 変数を別で指定
@@ -22,7 +22,7 @@ jobs:
           submodules: true
 
       - name: Clone My Qmk Keymaps
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           path: "./keyboards/${{ env.KEYBOARD }}"
 
