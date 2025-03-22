@@ -40,9 +40,9 @@ jobs:
 
       - name: Compile
         run:
-          pip list
-          which qmk
-      #   run: ./bin/qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
+          pip install qmk
+          qmk setup
+          qmk compile -kb ${{ env.KEYBOARD }}/${{ env.REV }} -km ${{ env.KEYMAP }}
 
       # - uses: actions/upload-artifact@v4
       #   with:
