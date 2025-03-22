@@ -1,5 +1,5 @@
 #!/bin/bash
-QMK_VERSION='0.22.0'
+QMK_VERSION='0.28.0'
 QMK_NAME='qmk_firmware'
 HOMEDIR='/home/vscode/project/'
 REPOSITORY_NAME='qmk'
@@ -19,9 +19,11 @@ keyboard_name=$(echo $args_kb | cut -d'/' -f1)
 if [ ! -d "qmk_firmware" ]; then
     git clone -b ${QMK_VERSION} --depth 1 --recurse-submodules https://github.com/qmk/qmk_firmware.git
 
-    # docker_build.shを入れ替え
-    rm -f qmk_firmeware/util/docker_build.sh
-    cp -p qmk_firmeware.docker_build.sh qmk_firmware/util/
+    # QMK_VERSIONが0.22ならdocker_build.shを入れ替え
+    if [ "${QMK_VERSION}" -eq '0.22' ]; then
+      rm -f qmk_firmeware/util/docker_build.sh
+      cp -p replace_script/${QMK_VERSION}/docker_build.sh qmk_firmware/util/docker_build.sh
+    fi
 fi
 
 # keyboardsの対象フォルダを入れ替え
@@ -31,10 +33,10 @@ cp -Rp ${keyboard_name} ${QMK_NAME}/keyboards/
 # qmk_firmwareに移動してコンパイル
 cd qmk_firmware
 
-# qmk setup時にdocker内の/.localにパーミッションがないとPermission deniedでエラーになる為、マウント用ディレクトリを作成
-if [ ! -d ".local" ]; then
-    mkdir -p .local
-fi
+# QMK:v0.22時代の修正 qmk setup時にdocker内の/.localにパーミッションがないとPermission deniedでエラーになる為、マウント用ディレクトリを作成
+# if [ ! -d ".local" ]; then
+    # mkdir -p .local
+# fi
 
 # build hex
 bash util/docker_build.sh ${args_kb}:${args_km}
