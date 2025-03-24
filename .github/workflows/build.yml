@@ -1,0 +1,27 @@
+name: Call Sample Action
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Original Action
+        uses: ijikeman/sample_action@v0.01
+        with:
+          qmk_version: '0.28.0'
+          keyboard: 'lets_split'
+          rev: 'rev2'
+          keymap: 'macro'
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: ${{ github.workspace }}/output/*.hex
