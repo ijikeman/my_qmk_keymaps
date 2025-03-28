@@ -21,7 +21,7 @@ jobs:
         uses: ijikeman/qmk_build@v0.0.1
         with:
           keyboard: 'helix'
-          rev: 'rev2'
+          rev: 'rev3_4rows'
           keymap: 'macro'
 
       - name: Upload artifact
