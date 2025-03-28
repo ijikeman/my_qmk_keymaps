@@ -15,7 +15,6 @@ jobs:
         with:
           keyboard: 'lets_split'
           rev: 'rev2'
-          keymap: 'macro'
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
