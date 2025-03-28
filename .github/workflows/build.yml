@@ -12,12 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Original Action
-        uses: ijikeman/sample_action@v0.01
+      - name: Build Action
+        uses: ijikeman/qmk_build@v0.01
         with:
-          qmk_version: '0.28.0'
           keyboard: 'lets_split'
           rev: 'rev2'
+          keymap: 'macro'
+
+      - name: Build Action
+        uses: ijikeman/qmk_build@v0.01
+        with:
+          keyboard: 'helix'
+          rev: 'rev3_4rows'
           keymap: 'macro'
 
       - name: Upload artifact
