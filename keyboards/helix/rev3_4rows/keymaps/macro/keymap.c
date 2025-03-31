@@ -78,7 +78,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * |      |      |      |      |      |      |             | LEFT | DOWN |  UP  | RGHT |L-CLCK|R-CLCK|
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |             |      | WIN_L|WIN_T |WIN_R |WHEELD|WHEELU|
+   * |      |      | WIN_L| WIN_T| WIN_R|      |             |M-LEFT|M-DOWN| M-UP |M-RGHT|WHEELD|WHEELU|
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      | DEL  |      |      |      |      |RESET |
    * `-------------------------------------------------------------------------------------------------'
@@ -86,7 +86,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_LOWER] = LAYOUT(
       KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
       _______, _______, _______, _______, _______, _______,                   KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, MS_BTN1, MS_BTN2,
-      _______, _______, _______, _______, _______, _______,                   _______,WIN_LEFT,WIN_TAB, WIN_RGHT, MS_WHLD, MS_WHLU,
+      _______, _______,WIN_LEFT, WIN_TAB, WIN_RGHT, _______,                  MS_LEFT, MS_DOWN,  MS_UP,  MS_RGHT, MS_WHLD, MS_WHLU,
       _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______, _______, QK_BOOT
       ),
 
