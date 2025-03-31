@@ -4,9 +4,6 @@
 			"path": "."
 		},
 		{
-			"path": "../qmk_cli.old"
-		},
-		{
 			"path": "../sample_action"
 		},
 		{
