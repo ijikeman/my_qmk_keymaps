@@ -7,3 +7,5 @@ DIP_SWITCH_ENABLE = no
 LTO_ENABLE = yes
 
 SRC += oled_display.c
+
+MOUSEKEY_ENABLE = yes
