@@ -26,9 +26,7 @@ enum layer_names {
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  ADJUST, = SAFE_RANGE,
-  RGBRST
-
+  ADJUST = SAFE_RANGE
 // MACRO
   ,
   M_BRC,
