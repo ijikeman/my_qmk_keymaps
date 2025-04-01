@@ -26,9 +26,7 @@ enum layer_names {
 
 // Defines the keycodes used by our macros in process_record_user
 enum custom_keycodes {
-  EISU = SAFE_RANGE,
-  KANA,
-  ADJUST,
+  ADJUST, = SAFE_RANGE,
   RGBRST
 
 // MACRO
@@ -164,30 +162,6 @@ static void user_mt(keyrecord_t *record, uint16_t modcode, uint16_t keycode, uin
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
-    case EISU:
-      if (record->event.pressed) {
-        if (is_mac_mode()) {
-          register_code(KC_LNG2);
-        }else{
-          tap_code16(LALT(KC_GRAVE));
-        }
-      } else {
-        unregister_code(KC_LNG2);
-      }
-      return false;
-      break;
-    case KANA:
-      if (record->event.pressed) {
-        if (is_mac_mode()) {
-          register_code(KC_LNG1);
-        }else{
-          tap_code16(LALT(KC_GRAVE));
-        }
-      } else {
-        unregister_code(KC_LNG1);
-      }
-      return false;
-      break;
     case ADJUST:
       if (record->event.pressed) {
         layer_on(_LOWER);
