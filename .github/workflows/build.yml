@@ -24,6 +24,13 @@ jobs:
           rev: 'rev3_4rows'
           keymap: 'macro'
 
+      - name: Qmk Build firmware Action
+        uses: ijikeman/qmk_build@v0.0.1
+        with:
+          keyboard: 'helix'
+          rev: 'rev3_4rows'
+          keymap: 'default'
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
