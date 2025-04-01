@@ -10,12 +10,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # - name: Qmk Build firmware Action
-      #   uses: ijikeman/qmk_build@v0.0.1
-      #   with:
-      #     keyboard: 'lets_split'
-      #     rev: 'rev2'
-      #     keymap: 'macro'
+      - name: Qmk Build firmware Action
+        uses: ijikeman/qmk_build@v0.0.1
+        with:
+          keyboard: 'lets_split'
+          rev: 'rev2'
+          keymap: 'macro'
 
       - name: Qmk Build firmware Action
         uses: ijikeman/qmk_build@v0.0.1
