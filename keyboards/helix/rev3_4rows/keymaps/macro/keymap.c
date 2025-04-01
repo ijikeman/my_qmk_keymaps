@@ -48,7 +48,6 @@ enum custom_keycodes {
 //#define RAISE MO(_RAISE)
 #define LOWER  LT(_LOWER, KC_SPC)
 #define RAISE  LT(_RAISE, KC_BSPC)
-#define ADJUST MO(_ADJUST)
 #define MLCTL  LCTL_T(KC_TAB)
 #define MLANG1 LALT(KC_GRV)
 #define MLANG2 LCTL(KC_SPC)
