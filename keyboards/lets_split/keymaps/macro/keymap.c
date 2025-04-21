@@ -198,11 +198,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         user_mt(record, KC_MINUS, KC_EQL, KC_LSFT, &pressed, &pressed_time);
         return false;
         break;
-    }
     // 長押しマクロ(ESC or CAPS)
     case M_ESC:
         user_mt(record, KC_ESC, KC_CAPS, 0, &pressed, &pressed_time);
         return false;
         break;
+    }
     return true;
 };
