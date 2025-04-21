@@ -25,6 +25,7 @@ enum custom_keycodes {
     M_MINUS,
     M_QUOT,
     M_S_MINUS,
+    M_ESC,
     WIN_TAB,
     WIN_LEFT,
     WIN_RGHT,
@@ -33,20 +34,20 @@ enum custom_keycodes {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 /* QWERTY
 * ,-----------------------------------------------------------------------------------.
-* | ESC  |   Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  [/] |
+*  ESC/Caps| Q  |   W  |   E  |   R  |   T  |   Y  |   U  |   I  |   O  |   P  |  [/] |
 * |------+------+------+------+------+-------------+------+------+------+------+------|
 * |TAB/CTL|  A  |   S  |   D  |   F  |   G  |   H  |   J  |   K  |   L  |   ;  | '/\  |
 * |------+------+------+------+------+------|------+------+------+------+------+------|
 * | Shift|   Z  |   X  |   C  |   V  |   B  |   N  |   M  |   ,  |   .  |   /  |Enter |
 * |------+------+------+------+------+------+------+------+------+------+------+------|
-* | CAPS |      |      | ALT  |  GUI | LOWER| RAISE| LANG |ADJUST|      |      |      |
+* |      |      |      | ALT  |  GUI | LOWER| RAISE| LANG |ADJUST|      |      |      |
 * `-----------------------------------------------------------------------------------'
  */
 [_QWERTY] = LAYOUT_ortho_4x12(
-  KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
+  M_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
   MLCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
   KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-  KC_CAPS, KC_NO,  KC_NO, KC_LALT, KC_LGUI,   LOWER,   RAISE,  MLANG1,     ADJUST,  KC_NO,   KC_NO,   KC_NO
+  KC_NO,  KC_NO,  KC_NO, KC_LALT, KC_LGUI,   LOWER,   RAISE,  MLANG1,     ADJUST,  KC_NO,   KC_NO,   KC_NO
 ),
 
 /* Lower
@@ -62,8 +63,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_ortho_4x12(
   KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
-  _______, _______, _______, _______, _______, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, MS_WHLD, MS_WHLU,
-  _______, _______,WIN_LEFT,WIN_TAB, WIN_RGHT, _______, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, MS_BTN1, MS_BTN2,
+  _______, _______,WIN_LEFT,WIN_TAB, WIN_RGHT, _______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, MS_WHLD, MS_WHLU,
+  _______, _______, _______, _______, _______, _______, MS_LEFT, MS_DOWN, MS_UP, MS_RGHT, MS_BTN1, MS_BTN2,
   _______, _______, _______, _______, _______, _______, KC_DEL, _______, _______, _______, _______, QK_BOOT 
 ),
 
@@ -97,13 +98,11 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  * `-----------------------------------------------------------------------------------'
  */
 [_ADJUST] =  LAYOUT_ortho_4x12(
-    KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, KC_F12,
-  KC_1, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11, KC_F12,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
   _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
 )
-
-
 };
 
 layer_state_t layer_state_set_user(layer_state_t state) {
@@ -200,5 +199,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         return false;
         break;
     }
+    // 長押しマクロ(ESC or CAPS)
+    case M_ESC:
+        user_mt(record, KC_ESC, KC_CAPS, 0, &pressed, &pressed_time);
+        return false;
+        break;
     return true;
 };

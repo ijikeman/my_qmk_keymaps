@@ -33,6 +33,7 @@ enum custom_keycodes {
   M_QUOT,
   M_MINUS,
   M_S_MINUS,
+  M_ESC,
 
 // WINDOWS_LAYER
   WIN_TAB,
@@ -46,26 +47,25 @@ enum custom_keycodes {
 #define RAISE  LT(_RAISE, KC_BSPC)
 #define MLCTL  LCTL_T(KC_TAB)
 #define MLANG1 LALT(KC_GRV)
-#define MLANG2 LCTL(KC_SPC)
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Qwerty
    * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Tab  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  |  [/] |
+   * |Tab/Caps| Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  |  [/] |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  | '/\  |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   N  |   M  |   ,  |   .  |   /  |Enter |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
-   * | CAPS |      |      | ALT  |  GUI | LOWER|Space |Space | RAISE| LANG |ADJUST|      |      |      |
+   * |      |      |      | ALT  |  GUI | LOWER|Space |Space | RAISE| LANG |ADJUST|      |      |      |
    * `-------------------------------------------------------------------------------------------------'
    */
   [_QWERTY] = LAYOUT(
-      KC_ESC,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
+      M_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
       MLCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
       KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-      KC_CAPS,KC_NO,   KC_NO, KC_LALT, KC_LGUI,   LOWER,    KC_SPC,  KC_SPC, RAISE,  MLANG1,  ADJUST,   KC_NO,    KC_NO,   KC_NO
+      KC_NO,  KC_NO,   KC_NO, KC_LALT, KC_LGUI,   LOWER,    KC_SPC,  KC_SPC, RAISE,  MLANG1,  ADJUST,   KC_NO,    KC_NO,   KC_NO
       ),
 
   /* Lower
@@ -81,8 +81,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    */
   [_LOWER] = LAYOUT(
       KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
-      _______, _______, _______, _______, _______, _______,                   KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, MS_WHLD, MS_WHLU,
-      _______, _______,WIN_LEFT, WIN_TAB,WIN_RGHT, _______,                   MS_LEFT, MS_DOWN,  MS_UP,  MS_RGHT, MS_BTN1, MS_BTN2,
+      _______, _______,WIN_LEFT, WIN_TAB,WIN_RGHT, _______,                   KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, MS_WHLD, MS_WHLU,
+      _______, _______, _______, _______, _______, _______,                   MS_LEFT, MS_DOWN,  MS_UP,  MS_RGHT, MS_BTN1, MS_BTN2,
       _______, _______, _______, _______, _______, _______, _______, _______, KC_DEL,  _______, _______, _______, _______, QK_BOOT
       ),
 
@@ -121,9 +121,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       _______, _______, _______, _______, _______, _______,                   _______, _______, _______, _______, _______, _______,
       _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
       )
-
 };
-
 
 layer_state_t layer_state_set_user(layer_state_t state) {
   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
@@ -217,6 +215,11 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // 長押しマクロ(_ or +)
     case M_S_MINUS:
         user_mt(record, KC_MINUS, KC_EQL, KC_LSFT, &pressed, &pressed_time);
+        return false;
+        break;
+    // 長押しマクロ(ESC or CAPS)
+    case M_ESC:
+        user_mt(record, KC_ESC, KC_CAPS, 0, &pressed, &pressed_time);
         return false;
         break;
     }
