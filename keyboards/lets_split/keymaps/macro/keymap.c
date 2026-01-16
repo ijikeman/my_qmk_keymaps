@@ -207,10 +207,10 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     // 長押しマクロ(LANG or CAPS)
     case M_LANG_CAPS:
         if (record->event.pressed) {
-            *pressed = true;
-            *pressed_time = record->event.time;
+            pressed = true;
+            pressed_time = record->event.time;
         } else {
-            if (timer_elapsed(*pressed_time) < TAPPING_TERM) {
+            if (timer_elapsed(pressed_time) < TAPPING_TERM) {
                 // タップ時：LANG（ALT+GRV）
                 register_code(KC_LALT);
                 tap_code(KC_GRV);
@@ -219,8 +219,8 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
                 // ホールド時：CAPS
                 tap_code(KC_CAPS);
             }
-            *pressed = false;
-            *pressed_time = 0;
+            pressed = false;
+            pressed_time = 0;
         }
         return false;
         break;
