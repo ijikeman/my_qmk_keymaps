@@ -52,39 +52,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /* Qwerty
    * ,-----------------------------------------.             ,-----------------------------------------.
-   * | Tab  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  |  [/] |
+   * | ESC  |   Q  |   W  |   E  |   R  |   T  |             |   Y  |   U  |   I  |   O  |   P  |  [/] |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Ctrl |   A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  | '/\  |
+   * |TAB/CTL|  A  |   S  |   D  |   F  |   G  |             |   H  |   J  |   K  |   L  |   ;  | '/\  |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * | Shift|   Z  |   X  |   C  |   V  |   B  |             |   N  |   M  |   ,  |   .  |   /  |Enter |
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
-   * |      |      |      | ALT  |  GUI | LOWER|Space |Space | RAISE| LANG |ADJUST|      |      |      |
+   * | Caps |      |      | ALT  |  GUI | LOWER|Space |Space | RAISE| LANG |ADJUST|      |      |      |
    * `-------------------------------------------------------------------------------------------------'
    */
-  [_QWERTY] = LAYOUT(
-      KC_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,                      KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
-      MLCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,                      KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
-      KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,                      KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
-      KC_NO,  KC_NO,   KC_NO, KC_LALT, KC_LGUI,   LOWER,    KC_SPC,  KC_SPC, RAISE,  MLANG1,  ADJUST,   KC_NO,    KC_NO,   KC_NO
-      ),
+[_QWERTY] = LAYOUT(
+  KC_ESC,   KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    M_BRC,
+  MLCTL,   KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, M_QUOT,
+  KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ENT,
+  KC_CAPS,  KC_NO,  KC_NO, KC_LALT, KC_LGUI,   LOWER,KC_SPC,  KC_SPC,   RAISE,    MLANG1,    ADJUST,  KC_NO,   KC_NO,   KC_NO
+),
 
   /* Lower
    * ,-----------------------------------------.             ,-----------------------------------------.
    * |   ~  |   !  |   @  |   #  |   $  |   %  |             |   ^  |   &  |   *  |   (  |   )  |  _/+ |
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
-   * | Caps |      | WIN_L| WIN_T| WIN_R|      |             | LEFT | DOWN |  UP  | RGHT |WHEELD|WHEELU|
+   * |      |      | WIN_L| WIN_T| WIN_R|      |             | LEFT | DOWN |  UP  | RGHT |WHEELD|WHEELU|
    * |------+------+------+------+------+------|             |------+------+------+------+------+------|
    * |      |      |      |      |      |      |             |M-LEFT|M-DOWN| M-UP |M-RGHT|L-CLCK|R-CLCK|
    * |------+------+------+------+------+------+-------------+------+------+------+------+------+------|
    * |      |      |      |      |      |      |      |      | DEL  |      |      |      |      |RESET |
    * `-------------------------------------------------------------------------------------------------'
    */
-  [_LOWER] = LAYOUT(
-      KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC,                   KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
-      KC_CAPS, KC_NO, WIN_LEFT, WIN_TAB,WIN_RGHT, KC_NO,                    KC_LEFT, KC_DOWN,  KC_UP,  KC_RGHT, MS_WHLD, MS_WHLU,
-      KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,                    MS_LEFT, MS_DOWN,  MS_UP,  MS_RGHT, MS_BTN1, MS_BTN2,
-      KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  KC_DEL,  KC_NO,  KC_NO,  KC_NO,  KC_NO,  QK_BOOT
-      ),
+[_LOWER] = LAYOUT(
+  KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR, KC_ASTR, KC_LPRN, KC_RPRN, M_S_MINUS,
+  _______, _______, _______, _______, _______,_______, KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, MS_WHLD, MS_WHLU,
+  _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______,
+  _______, _______, _______, _______, _______, _______,_______,_______, KC_DEL, _______, _______, _______, _______, QK_BOOT 
+),
 
   /* Raise
    * ,-----------------------------------------.             ,-----------------------------------------.
